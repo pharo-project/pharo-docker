@@ -18,9 +18,7 @@ generated_warning() {
 }
 
 for version in "${versions[@]}"; do
-	if [ $version -le 40 ]; then
-		variants="" # versions <= 40 have custom Dockerfile
-	elif [ $version -eq 50 ]; then
+	if [ $version -le 50 ]; then
 		variants="slim"
 	else
 		variants="slim slim64"
