@@ -4,9 +4,9 @@ VERSION=$2
 IMAGE=$3
 
 if [ $ARCH = "64" ]; then
-	echo wget -O- get.pharo.org/64/${VERSION} | bash
+	wget -O- get.pharo.org/64/${VERSION} | bash
 else
-	echo wget -O- get.pharo.org/${VERSION} | bash
+	wget -O- get.pharo.org/${VERSION} | bash
 fi
 
 # a copy from https://github.com/pharo-project/pharo-vm/blob/master/scripts/run-tests.sh
