@@ -15,7 +15,7 @@ before_script:
 
 script:
   - docker build -t "$IMAGE" "${VARIANT}"
-  - ~/test.sh "${VERSION}" "${IMAGE}"
+  - bash ~/test.sh "${VERSION}" "${IMAGE}"
 
 after_script:
   - docker images
