@@ -2,20 +2,17 @@ language: bash
 services: docker
 
 env:
-  - VERSION=40 VARIANT=slim
-  - VERSION=50 VARIANT=slim
-  - VERSION=60 VARIANT=slim
-  - VERSION=60 VARIANT=slim64
-  - VERSION=70 VARIANT=slim
-  - VERSION=70 VARIANT=slim64
+  - ARCH=32 VERSION=40 VARIANT=slim
+  - ARCH=32 VERSION=50 VARIANT=slim
+  - ARCH=32 VERSION=60 VARIANT=slim
+  - ARCH=64 VERSION=60 VARIANT=slim64
 
 before_script:
-  - cd "$VERSION"
   - IMAGE="pharo:${VERSION}-${VARIANT}"
 
 script:
-  - docker build -t "$IMAGE" "${VARIANT}"
-  - ~/test.sh "${VERSION}" "${IMAGE}"
+  - (cd "$VERSION" && docker build -t "${IMAGE}" "${VARIANT}")
+  - bash ./test.sh "${ARCH}" "${VERSION}" "${IMAGE}"
 
 after_script:
   - docker images
