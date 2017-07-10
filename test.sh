@@ -9,11 +9,9 @@ else
 	wget -O- get.pharo.org/${VERSION} | bash
 fi
 
-# a copy from https://github.com/pharo-project/pharo-vm/blob/master/scripts/run-tests.sh
-NO_TEST="^(?!Metacello)"		# too long
-NO_TEST="$NO_TEST(?!Versionner)"	# too long
-NO_TEST="$NO_TEST(?!GT)"		# too slow
-NO_TEST="$NO_TEST(?!FileSystem)"	# requires linux configuration
-NO_TEST="$NO_TEST(?!ReleaseTests)"	# just not now :)
+# Just the basics to ensure image is alright
+TEST="^(Kernel-Tests)"
+TEST="$TEST|(Athens.*)"
+TEST="$TEST|(Zodiac-Tests)"
 
-docker run -ti --rm -v `pwd`:/var/data "$IMAGE" pharo /var/data/Pharo.image test --no-xterm --fail-on-failure "$NO_TEST[A-Z].*"
+docker run -ti --rm -v `pwd`:/var/data "$IMAGE" pharo /var/data/Pharo.image test --no-xterm --fail-on-failure "${TEST}"
