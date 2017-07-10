@@ -10,12 +10,11 @@ env:
   - VERSION=70 VARIANT=slim64
 
 before_script:
-  - cd "$VERSION"
   - IMAGE="pharo:${VERSION}-${VARIANT}"
 
 script:
-  - docker build -t "$IMAGE" "${VARIANT}"
-  - bash ~/test.sh "${VERSION}" "${IMAGE}"
+  - (cd "$VERSION" && docker build -t "$IMAGE" "${VARIANT}")
+  - bash ./test.sh "${VERSION}" "${IMAGE}"
 
 after_script:
   - docker images
