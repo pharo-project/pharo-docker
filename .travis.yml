@@ -6,12 +6,14 @@ env:
   - ARCH=32 VERSION=50 VARIANT=slim
   - ARCH=32 VERSION=60 VARIANT=slim
   - ARCH=64 VERSION=60 VARIANT=slim64
+  - ARCH=32 VERSION=61 VARIANT=slim
+  - ARCH=64 VERSION=61 VARIANT=slim64
 
 before_script:
-  - IMAGE="pharo:${VERSION}-${VARIANT}"
+  - IMAGE="pharo/vm:${VERSION}-${VARIANT}"
 
 script:
-  - (cd "$VERSION" && docker build -t "${IMAGE}" "${VARIANT}")
+  - (cd "vm/$VERSION" && docker build -t "${IMAGE}" "${VARIANT}")
   - bash ./test.sh "${ARCH}" "${VERSION}" "${IMAGE}"
 
 after_script:
