@@ -12,10 +12,10 @@ RUN set -ex \
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends $buildDeps $runtimeDeps \
 	&& (cd /usr/local/bin && wget -O- http://get.pharo.org/vm50 | bash) \
-	&& (mkdir -p /var/pharo/images/50; cd /var/pharo/images/50 && wget -O- http://get.pharo.org/50 | bash) \
+	&& (mkdir -p /var/pharo/images/50; ln -sf /var/pharo/images/50 /var/pharo/images/default; cd /var/pharo/images/50 && wget -O- http://get.pharo.org/50 | bash) \
 	&& apt-get purge -y --auto-remove $buildDeps \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& true 
 
-ENTRYPOINT ["/usr/local/bin/pharo", "/var/pharo/images/50/Pharo.image"]
+ENTRYPOINT ["/usr/local/bin/pharo", "/var/pharo/images/default/Pharo.image"]
 	

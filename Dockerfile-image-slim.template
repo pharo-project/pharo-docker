@@ -7,10 +7,10 @@ RUN set -ex \
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends $buildDeps $runtimeDeps \
 	&& (cd /usr/local/bin && wget -O- http://get.pharo.org/vm%%VERSION%% | bash) \
-	&& (mkdir -p /var/pharo/images/%%VERSION%%; cd /var/pharo/images/%%VERSION%% && wget -O- http://get.pharo.org/%%VERSION%% | bash) \
+	&& (mkdir -p /var/pharo/images/%%VERSION%%; ln -sf /var/pharo/images/%%VERSION%% /var/pharo/images/default; cd /var/pharo/images/%%VERSION%% && wget -O- http://get.pharo.org/%%VERSION%% | bash) \
 	&& apt-get purge -y --auto-remove $buildDeps \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& true 
 
-ENTRYPOINT ["/usr/local/bin/pharo", "/var/pharo/images/%%VERSION%%/Pharo.image"]
-	
+ENTRYPOINT ["/usr/local/bin/pharo", "/var/pharo/images/default/Pharo.image"]
+
